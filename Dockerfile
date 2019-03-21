@@ -39,7 +39,7 @@ RUN set -x \
       # && chown -R pptruser:pptruser /node_modules \
       && addgroup -S pptruser && adduser -S pptruser -G pptruser \
       && chown -R pptruser:pptruser /home/pptruser \
-      && chown -R pptruser:pptruser /node_modules \
+      # && chown -R pptruser:pptruser /node_modules \
       && git clone --recursive https://github.com/gildas-lormeau/SingleFile \
       && cd SingleFile && npm install --production && cd cli && npm install --production && chmod +x single-file \
       && echo
