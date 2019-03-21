@@ -17,13 +17,13 @@ RUN chmod +x /usr/local/bin/dumb-init \
     && apt-get purge --auto-remove -y curl \
     && rm -rf /src/*.deb \
     # Install puppeteer so it's available in the container.
-    && npm i puppeteer \
+    && cd / && npm i puppeteer \
     # Add user so we don't need --no-sandbox.
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /node_modules \
-    && git clone --recursive https://github.com/gildas-lormeau/SingleFile \
+    && cd /home/pptruser && git clone --recursive https://github.com/gildas-lormeau/SingleFile \
     && cd SingleFile && npm install --production && cd cli && npm install --production && chmod +x single-file
 
 # Run everything after as non-privileged user.
