@@ -1,4 +1,5 @@
-FROM node:11-alpine
+# FROM node:11-alpine
+FROM alpine:latest
 
 ENV CHROME_BIN="/usr/bin/chromium-browser" \
     NODE_ENV="production"
@@ -20,6 +21,12 @@ RUN set -x \
       chromium@edge \
       nss@edge \
       harfbuzz@edge \
+    # node
+    && apk add --no-cache make gcc g++ python git nodejs nodejs-npm yarn \
+    && rm -rf /var/lib/apt/lists/* \
+    /var/cache/apk/* \
+    /usr/share/man \
+    /tmp/* \
     && npm install puppeteer-core@1.10.0 --silent \
       \
       # Cleanup
