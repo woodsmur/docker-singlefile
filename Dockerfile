@@ -3,7 +3,7 @@ FROM node:11-alpine
 ENV CHROME_BIN="/usr/bin/chromium-browser" \
     NODE_ENV="production"
 
-WORKDIR cd /home/pptruser
+WORKDIR /home/pptruser
 
 RUN set -x \
     && apk update && apk upgrade \
