@@ -3,6 +3,8 @@ FROM node:8-slim
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
 
+WORKDIR /home/pptruser
+
 RUN chmod +x /usr/local/bin/dumb-init \
     && apt-get update && apt-get install -yq libgconf-2-4 \
     && apt-get update && apt-get install -y wget git --no-install-recommends \
@@ -20,16 +22,12 @@ RUN chmod +x /usr/local/bin/dumb-init \
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /node_modules
+    && chown -R pptruser:pptruser /node_modules \
+    && git clone --recursive https://github.com/gildas-lormeau/SingleFile \
+    && cd SingleFile && npm install --production && cd cli && npm install --production && chmod +x single-file
 
 # Run everything after as non-privileged user.
 USER pptruser
-
-# install singlefile
-WORKDIR /home/pptruser
-RUN git clone --recursive https://github.com/gildas-lormeau/SingleFile \
-    # https://antonfisher.com/posts/2018/03/19/reducing-docker-image-size-of-a-node-js-application/
-    && cd SingleFile && npm install --production && cd cli && npm install --production && chmod +x single-file
 
 ENTRYPOINT ["dumb-init", "--"]
 # CMD ["/SingleFile/cli/single-file", "--browser-executable-path", "/usr/bin/google-chrome-unstable"]
