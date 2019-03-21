@@ -13,7 +13,13 @@ RUN set -x \
     wget \
     git \
     ttf-freefont \
-    chromium \
+    # chromium \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk add --no-cache \
+      chromium@edge \
+      nss@edge \
+      harfbuzz@edge \
     && npm install puppeteer-core@1.10.0 --silent \
       \
       # Cleanup
