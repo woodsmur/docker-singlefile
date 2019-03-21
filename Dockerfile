@@ -15,18 +15,19 @@ RUN set -x \
     git \
     ttf-freefont \
     # chromium \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
-    apk add --no-cache \
+    && echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    && echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    && apk update \
+    && apk add --no-cache \
       chromium@edge \
       nss@edge \
       harfbuzz@edge \
     # node
     && apk add --no-cache make gcc g++ python git nodejs nodejs-npm yarn \
     && rm -rf /var/lib/apt/lists/* \
-    /var/cache/apk/* \
-    /usr/share/man \
-    /tmp/* \
+      /var/cache/apk/* \
+      /usr/share/man \
+      /tmp/* \
     && npm install puppeteer-core@1.10.0 --silent \
       \
       # Cleanup
