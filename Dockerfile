@@ -29,14 +29,14 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
 USER pptruser
 
 # install singlefile
-WORKDIR /
+WORKDIR /home/pptruser
 RUN git clone --recursive https://github.com/gildas-lormeau/SingleFile \
     # https://antonfisher.com/posts/2018/03/19/reducing-docker-image-size-of-a-node-js-application/
     && cd SingleFile && npm install --production && cd cli && npm install --production && chmod +x single-file
 
 ENTRYPOINT ["dumb-init", "--"]
 # CMD ["/SingleFile/cli/single-file", "--browser-executable-path", "/usr/bin/google-chrome-unstable"]
-CMD /SingleFile/cli/single-file --browser-executable-path=/usr/bin/google-chrome-unstable
+CMD /home/pptruser/SingleFile/cli/single-file --browser-executable-path=/usr/bin/google-chrome-unstable
 
 # CMD ["google-chrome-unstable"]
 
