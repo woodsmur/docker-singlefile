@@ -23,13 +23,16 @@ RUN set -x \
       # && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
       # && chown -R pptruser:pptruser /home/pptruser \
       # && chown -R pptruser:pptruser /node_modules \
+      && addgroup -S pptruser && adduser -S pptruser -G pptruser \
       && git clone --recursive https://github.com/gildas-lormeau/SingleFile \
       && cd SingleFile && npm install --production && cd cli && npm install --production && chmod +x single-file \
       && echo
 
+USER pptruser
+
 ENTRYPOINT ["dumb-init", "--"]
 
-CMD /home/pptruser/SingleFile/cli/single-file --browser-executable-path=/usr/bin/chromium-browser
+CMD ["/home/pptruser/SingleFile/cli/single-file", "--browser-executable-path", "/usr/bin/chromium-browser"]
 
 # # FROM node:8-slim
 # # FROM node:8-alpine
