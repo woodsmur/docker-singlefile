@@ -44,9 +44,12 @@ RUN set -x \
 
 USER pptruser
 
-ENTRYPOINT ["dumb-init", "--"]
+ENTRYPOINT ["dumb-init", "--", "/home/pptruser/SingleFile/cli/single-file", "--browser-executable-path", "/usr/bin/chromium-browser"]
 
-CMD ["/home/pptruser/SingleFile/cli/single-file", "--browser-executable-path", "/usr/bin/chromium-browser"]
+
+# ENTRYPOINT ["dumb-init", "--"]
+
+# CMD ["/home/pptruser/SingleFile/cli/single-file", "--browser-executable-path", "/usr/bin/chromium-browser"]
 
 # # FROM node:8-slim
 # # FROM node:8-alpine
